@@ -1,158 +1,144 @@
-# 🚀 Galaxium Travels - Interplanetary Booking System
+# 🚀 Galaxium Travels — Interplanetary Booking System
 
-A complete full-stack application for booking interplanetary space travel, featuring a modern React frontend and a FastAPI backend with dual REST and MCP protocol support.
+A full-stack space-flight booking system with a React 19 frontend and a Python FastAPI backend that exposes the same business logic over both REST and MCP (Model Context Protocol).
 
 ## 🌟 Features
 
-- **Modern Space-Themed UI** - Beautiful, responsive interface with animated starfield
-- **Full Booking System** - Browse flights, make bookings, manage reservations
-- **Dual Protocol Backend** - REST API and MCP (Model Context Protocol) support
-- **Type-Safe** - Full TypeScript frontend and Python type hints
-- **Real-Time Updates** - Live flight availability and booking status
-- **User Management** - Simple name/email authentication
-- **Production Ready** - Optimized builds and comprehensive error handling
+- **Space-Themed UI** — Responsive interface with animated starfield
+- **Full Booking System** — Browse flights, make bookings, manage reservations
+- **Dual Protocol Backend** — REST API and MCP support on the same server
+- **Type-Safe** — TypeScript frontend with strict mode; Python type hints throughout
+- **User Management** — Name/email authentication with session context
+- **Demo Data** — Auto-seeded users, flights, and bookings on every server start
 
 ## 🏗️ Architecture
 
 ```
-galaxium-travels-infrastructure/
-├── booking_system_backend/     # FastAPI backend (Python)
-│   ├── server.py              # Main server with REST & MCP
-│   ├── services/              # Business logic layer
-│   ├── models.py              # SQLAlchemy ORM models
-│   └── tests/                 # Test suite
+galaxium-travels/
+├── booking_system_backend/       # FastAPI + FastMCP server (Python)
+│   ├── server.py                 # REST & MCP routes, app lifecycle
+│   ├── db.py                     # SQLAlchemy session and engine setup
+│   ├── models.py                 # SQLAlchemy ORM models
+│   ├── schemas.py                # Pydantic request/response schemas
+│   ├── seed.py                   # Demo data seeding
+│   ├── services/                 # Business logic (user, flight, booking)
+│   │   ├── user.py
+│   │   ├── flight.py
+│   │   └── booking.py
+│   ├── tests/                    # pytest test suite
+│   ├── requirements.txt
+│   └── Dockerfile
 │
-├── booking_system_frontend/    # React frontend (TypeScript)
+├── booking_system_frontend/      # React 19 + TypeScript + Vite
 │   ├── src/
-│   │   ├── components/        # Reusable UI components
-│   │   ├── pages/            # Route pages
-│   │   ├── services/         # API integration
-│   │   └── types/            # TypeScript definitions
-│   └── dist/                 # Production build
+│   │   ├── components/           # Reusable UI components
+│   │   ├── pages/                # Route-level pages
+│   │   ├── hooks/                # Custom React hooks (UserProvider, etc.)
+│   │   ├── services/             # API layer (axios instance + helpers)
+│   │   ├── types/                # TypeScript type definitions
+│   │   └── utils/                # Utility functions
+│   └── package.json
 │
-├── start.sh                   # Unix/Mac startup script
-└── start.bat                  # Windows startup script
+└── start.sh                      # macOS/Linux one-command startup
 ```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Python 3.8+** - [Download](https://www.python.org/downloads/)
-- **Node.js 18+** - [Download](https://nodejs.org/)
-- **npm** (comes with Node.js)
+- **Python 3.8+** — [Download](https://www.python.org/downloads/)
+- **Node.js 18+** — [Download](https://nodejs.org/)
 
-### Option 1: One-Command Start (Recommended)
+### Option 1: One-Command Start (macOS/Linux)
 
-#### On macOS/Linux:
 ```bash
 ./start.sh
 ```
 
-#### On Windows:
-```bash
-start.bat
-```
-
-This will automatically:
-- ✅ Install all dependencies
-- ✅ Start the backend server on port 8080
-- ✅ Start the frontend dev server on port 5173
-- ✅ Open both in separate terminal windows
+This will:
+- Install all dependencies
+- Start the backend on port **8080**
+- Start the frontend dev server on port **5173**
 
 ### Option 2: Manual Start
 
-#### Start Backend:
+#### Backend
 ```bash
 cd booking_system_backend
 python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python server.py
 ```
 
-#### Start Frontend (in a new terminal):
+#### Frontend (new terminal)
 ```bash
 cd booking_system_frontend
 npm install
 npm run dev
 ```
 
-## 🌐 Access the Application
+## 🌐 Endpoints
 
-Once started, access:
-
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:8080
-- **API Documentation**: http://localhost:8080/docs
-- **MCP Endpoint**: http://localhost:8080/mcp
-
-## 📚 Documentation
-
-### Backend
-See [booking_system_backend/README.md](booking_system_backend/README.md) for:
-- API endpoints documentation
-- MCP tools reference
-- Database schema
-- Testing instructions
-
-### Frontend
-See [booking_system_frontend/README.md](booking_system_frontend/README.md) for:
-- Component documentation
-- Styling guide
-- Build instructions
-- Deployment options
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:5173 |
+| Backend REST API | http://localhost:8080 |
+| Swagger / OpenAPI docs | http://localhost:8080/docs |
+| MCP endpoint | http://localhost:8080/mcp |
 
 ## 🎯 User Guide
 
 ### Booking a Flight
 
-1. **Browse Flights** - Navigate to the Flights page to see all available routes
-2. **Search & Filter** - Use the search bar to find specific destinations
-3. **Sign In/Register** - Click "Book Now" and enter your name and email
-4. **Confirm Booking** - Review flight details and confirm your reservation
-5. **Manage Bookings** - View and cancel bookings from "My Bookings" page
+1. **Browse Flights** — Navigate to the Flights page to see available routes
+2. **Search & Filter** — Use the search bar to find specific destinations
+3. **Sign In / Register** — Click "Book Now" and enter your name and email
+4. **Confirm Booking** — Review flight details and confirm your reservation
+5. **Manage Bookings** — View and cancel bookings from the "My Bookings" page
 
 ### Demo Data
 
-The system comes pre-seeded with:
-- **10 Users** - Alice, Bob, Charlie, Diana, Eve, Frank, Grace, Heidi, Ivan, Judy
-- **10 Flights** - Routes between Earth, Mars, Moon, Venus, Jupiter, Europa, Pluto
-- **20 Sample Bookings** - Various booking statuses
+The database is wiped and re-seeded on every server start with:
+- **10 Users** — Alice, Bob, Charlie, Diana, Eve, Frank, Grace, Heidi, Ivan, Judy
+- **10 Flights** — Routes between Earth, Mars, Moon, Venus, Jupiter, Europa, Pluto
+- **20 Sample Bookings** — Mix of `booked`, `cancelled`, and `completed` statuses
 
 ## 🛠️ Technology Stack
 
 ### Backend
-- **FastAPI** - Modern Python web framework
-- **SQLAlchemy** - ORM for database operations
-- **Pydantic** - Data validation
-- **FastMCP** - MCP protocol support
-- **SQLite** - Lightweight database
-- **Uvicorn** - ASGI server
+| Package | Purpose |
+|---|---|
+| FastAPI | Web framework |
+| FastMCP | MCP protocol layer |
+| SQLAlchemy | ORM |
+| Pydantic v2 | Data validation & serialisation |
+| SQLite | Database (file: `booking.db`) |
+| Uvicorn | ASGI server |
 
 ### Frontend
-- **React 18** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool
-- **Tailwind CSS** - Styling
-- **Framer Motion** - Animations
-- **React Router** - Routing
-- **Axios** - HTTP client
-- **React Hot Toast** - Notifications
+| Package | Purpose |
+|---|---|
+| React 19 | UI library |
+| TypeScript 5 | Type safety |
+| Vite 7 | Build tool |
+| Tailwind CSS 3 | Styling |
+| React Router 7 | Routing |
+| Framer Motion | Animations |
+| Axios | HTTP client |
+| Lucide React | Icons |
+| React Hot Toast | Notifications |
 
 ## 🧪 Testing
 
-### Backend Tests
 ```bash
 cd booking_system_backend
-pytest
+pytest                             # all tests
+pytest tests/test_services.py     # service layer only
+pytest tests/test_rest.py         # REST endpoints only
 ```
 
-### Frontend Build Test
-```bash
-cd booking_system_frontend
-npm run build
-```
+Tests use an in-memory SQLite database; each test function gets a fresh schema. `seed()` is patched to a no-op.
 
 ## 📦 Production Deployment
 
@@ -167,16 +153,15 @@ uvicorn server:app --host 0.0.0.0 --port 8080
 ```bash
 cd booking_system_frontend
 npm run build
-# Deploy the 'dist' folder to your hosting service
+# Deploy the generated 'dist/' folder to your static hosting service
 ```
 
-### Docker Support
-Both backend and frontend include Dockerfiles for containerized deployment.
+Both `booking_system_backend/` and `booking_system_frontend/` include a `Dockerfile` for containerised deployment.
 
-## 🎨 Customization
+## 🎨 Configuration
 
-### Change API URL
-Edit `booking_system_frontend/.env`:
+### Change the API URL
+Create or edit `booking_system_frontend/.env`:
 ```env
 VITE_API_URL=https://your-api-url.com
 ```
@@ -187,47 +172,22 @@ Edit `booking_system_frontend/tailwind.config.js`:
 colors: {
   'cosmic-purple': '#6366F1',
   'nebula-pink': '#EC4899',
-  // Add your colors
 }
 ```
 
 ## 🐛 Troubleshooting
 
-### Backend won't start
-- Ensure Python 3.8+ is installed: `python --version`
-- Check if port 8080 is available
-- Verify all dependencies are installed: `pip install -r requirements.txt`
-
-### Frontend won't start
-- Ensure Node.js 18+ is installed: `node --version`
-- Check if port 5173 is available
-- Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
-
-### Connection Issues
-- Verify backend is running on http://localhost:8080
-- Check CORS settings in backend
-- Ensure `.env` file exists in frontend with correct API URL
+| Problem | Fix |
+|---|---|
+| Backend won't start | Check Python version (`python --version`, needs 3.8+) and that port 8080 is free |
+| Frontend won't start | Check Node version (`node --version`, needs 18+) and that port 5173 is free |
+| `npm install` errors | Delete `node_modules/` and rerun `npm install` |
+| API connection refused | Verify backend is running and `VITE_API_URL` in `.env` is correct |
 
 ## 📄 License
 
-This project is part of the Galaxium Travels booking system.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## 📧 Support
-
-For issues or questions:
-- Check the documentation in each component's README
-- Review the troubleshooting section above
-- Open an issue on GitHub
+MIT — see [LICENSE](LICENSE).
 
 ---
 
-**Built with ❤️ for space travelers** 🚀✨
-
-*Explore the cosmos, one booking at a time!*
+*Explore the cosmos, one booking at a time.*
